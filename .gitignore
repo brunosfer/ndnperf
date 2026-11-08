@@ -1,3 +1,5 @@
 *.class
 java/server/out/
 java/client/out/
+c++/*/bin/
+c++/*/build/

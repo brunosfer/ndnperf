@@ -1,3 +1,4 @@
+// Modified 2026 by Bruno Fernandes <bruno.fernandes@tum.de>: <fstream> included for ndn-cxx 0.9 builds.
 #pragma once
 
 #include <ndn-cxx/name.hpp>
@@ -10,8 +11,9 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 
-#include <string>
 #include <chrono>
+#include <fstream>
+#include <string>
 
 #include "module.h"
 

@@ -1,5 +1,7 @@
 /*    
 Copyright (C) 2015-2017  Xavier MARCHAL
+Modified 2026 by Bruno Fernandes <bruno.fernandes@tum.de>: ported to ndn-cxx 0.9
+(Interest filter callbacks, Face::getIoContext, Data::setContent with a span).
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -138,7 +140,9 @@ public:
     ~Server() = default;
 
     void start() {
-        _face.setInterestFilter(_prefix, bind(&Server::on_interest, this, _2), bind(&Server::on_register_failed, this));
+        _face.setInterestFilter(_prefix,
+                                [this] (const InterestFilter&, const Interest &interest) { on_interest(interest); },
+                                [this] (const Name&, const std::string&) { on_register_failed(); });
 
         for (int i = 0; i < _concurrency; ++i) {
             _thread_pool.create_thread(boost::bind(&Server::process, this, &_log_vars[i * 4]));
@@ -154,7 +158,7 @@ public:
         _stop = true;
         Name name(_prefix);
         name.append("dummy");
-        _face.getIoService().stop();
+        _face.getIoContext().stop();
         for (int i = 0; i < _concurrency; ++i) {
             _queue.enqueue(std::make_pair(name, std::chrono::steady_clock::now()));
         }
@@ -190,7 +194,7 @@ public:
                     long max_seg_num = ((long)file.tellg() - 1) / _payload_size;
                     file.seekg(name.get(-1).toSegment() * _payload_size, std::ios_base::beg);
                     long size = file.read(buffer, _payload_size).gcount();
-                    data->setContent((uint8_t*)buffer, size);
+                    data->setContent(make_span(reinterpret_cast<const uint8_t*>(buffer), static_cast<size_t>(size)));
                     data->setFinalBlock(ndn::Name::Component::fromSegment(max_seg_num));
                     i[0] += size;
                 }

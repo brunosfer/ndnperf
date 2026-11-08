@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use ndnperf in your research, please cite the original study as below."
+type: software
+title: "ndnperf: server-side performance evaluation tool for Named Data Networking (port to ndn-cxx 0.9)"
+abstract: "ndnperf by Xavier Marchal measures the throughput, latency and processing time of an NDN server, in the way iPerf does for IP. This fork ports its C++ version to ndn-cxx 0.9 and integrates it into MiniNDN-WiFi."
+authors:
+  - family-names: "Marchal"
+    given-names: "Xavier"
+  - family-names: "Fernandes"
+    given-names: "Bruno"
+    email: "bruno.fernandes@tum.de"
+    orcid: "https://orcid.org/0009-0008-5898-9698"
+    affiliation: "Technical University of Munich"
+license: GPL-3.0-or-later
+repository-code: "https://github.com/brunosfer/ndnperf"
+keywords:
+  - named-data networking
+  - NDN
+  - performance
+  - benchmark
+  - ndn-cxx
+preferred-citation:
+  type: conference-paper
+  title: "Server-side performance evaluation of NDN"
+  authors:
+    - family-names: "Marchal"
+      given-names: "Xavier"
+    - family-names: "Cholez"
+      given-names: "Thibault"
+    - family-names: "Festor"
+      given-names: "Olivier"
+  collection-title: "Proceedings of the 3rd ACM Conference on Information-Centric Networking (ICN '16)"
+  publisher:
+    name: "ACM"
+  year: 2016
+  start: 148
+  end: 153
+  doi: "10.1145/2984356.2984364"
